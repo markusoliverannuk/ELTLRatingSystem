@@ -1,4 +1,4 @@
-package helper
+package dbfunc
 
 import (
 	"database/sql"

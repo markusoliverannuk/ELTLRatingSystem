@@ -1,11 +1,15 @@
 package helper
 
-import "log"
+import (
+	"log"
+	dbfunc "ratingtable/1databasefunctionality"
+	types "ratingtable/1types"
+)
 
-func RetrievePlayerDataFromDatabaseByName(playername string) ([]Person, error) {
-	var players []Person
+func RetrievePlayerDataFromDatabaseByName(playername string) ([]types.Person, error) {
+	var players []types.Person
 
-	rows, err := Db.Query("SELECT * FROM leaderboard WHERE EESNIMI LIKE ? OR PERENIMI LIKE ?", "%"+playername+"%", "%"+playername+"%")
+	rows, err := dbfunc.Db.Query("SELECT * FROM leaderboard WHERE EESNIMI LIKE ? OR PERENIMI LIKE ?", "%"+playername+"%", "%"+playername+"%")
 	if err != nil {
 		log.Fatal(err)
 		return players, err
@@ -13,7 +17,7 @@ func RetrievePlayerDataFromDatabaseByName(playername string) ([]Person, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var player Person
+		var player types.Person
 		err := rows.Scan(
 			&player.RankingPos,
 			&player.RatePlpnts,

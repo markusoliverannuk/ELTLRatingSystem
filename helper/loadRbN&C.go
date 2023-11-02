@@ -3,12 +3,14 @@ package helper
 import (
 	"fmt"
 	"log"
+	dbfunc "ratingtable/1databasefunctionality"
+	types "ratingtable/1types"
 )
 
-func RetrievePlayerDataFromDatabaseByNameAndClub(playername string, clubname string) ([]Person, error) {
-	var players []Person
+func RetrievePlayerDataFromDatabaseByNameAndClub(playername string, clubname string) ([]types.Person, error) {
+	var players []types.Person
 	fmt.Println("Used")
-	rows, err := Db.Query("SELECT * FROM leaderboard WHERE (EESNIMI LIKE ? OR PERENIMI LIKE ?) AND KLUBI LIKE ?", "%"+playername+"%", "%"+playername+"%", "%"+clubname+"%")
+	rows, err := dbfunc.Db.Query("SELECT * FROM leaderboard WHERE (EESNIMI LIKE ? OR PERENIMI LIKE ?) AND KLUBI LIKE ?", "%"+playername+"%", "%"+playername+"%", "%"+clubname+"%")
 	if err != nil {
 		log.Fatal(err)
 		return players, err
@@ -16,7 +18,7 @@ func RetrievePlayerDataFromDatabaseByNameAndClub(playername string, clubname str
 	defer rows.Close()
 
 	for rows.Next() {
-		var player Person
+		var player types.Person
 		err := rows.Scan(
 			&player.RateOrder,
 			&player.RatePlpnts,

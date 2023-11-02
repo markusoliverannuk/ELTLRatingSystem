@@ -3,11 +3,12 @@ package helper
 import (
 	"fmt"
 	"net/http"
+	types "ratingtable/1types"
 )
 
-func LoadRatingPage(w http.ResponseWriter, r *http.Request, players []Person) {
+func LoadRatingPage(w http.ResponseWriter, r *http.Request, players []types.Person) {
 	data := struct {
-		Players []Person
+		Players []types.Person
 	}{
 		Players: players,
 	}

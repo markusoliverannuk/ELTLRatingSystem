@@ -3,11 +3,13 @@ package helper
 import (
 	"fmt"
 	"log"
+	dbfunc "ratingtable/1databasefunctionality"
+	types "ratingtable/1types"
 )
 
-func RetrievePlayerDataFromDatabase() ([]Person, error) {
+func RetrievePlayerDataFromDatabase() ([]types.Person, error) {
 
-	rows, err := Db.Query("SELECT * FROM leaderboard ORDER BY PP DESC")
+	rows, err := dbfunc.Db.Query("SELECT * FROM leaderboard ORDER BY PP DESC")
 	if err != nil {
 		// Handle the error
 		fmt.Println(err)
@@ -15,11 +17,11 @@ func RetrievePlayerDataFromDatabase() ([]Person, error) {
 	}
 	defer rows.Close()
 
-	var players []Person
+	var players []types.Person
 	rank := 1
 	for rows.Next() {
 
-		var player Person
+		var player types.Person
 		player.RankingPos = rank
 		err := rows.Scan(
 			&player.RatePlpnts,
@@ -44,10 +46,10 @@ func RetrievePlayerDataFromDatabase() ([]Person, error) {
 	return players, nil
 }
 
-func RetrieveTournamentsDataFromDatabase() ([]Tournament, error) {
-	var tournaments []Tournament
+func RetrieveTournamentsDataFromDatabase() ([]types.Tournament, error) {
+	var tournaments []types.Tournament
 
-	rows, err := Db.Query("SELECT * FROM tournaments")
+	rows, err := dbfunc.Db.Query("SELECT * FROM tournaments")
 	if err != nil {
 		log.Fatal(err)
 		return tournaments, err
@@ -55,7 +57,7 @@ func RetrieveTournamentsDataFromDatabase() ([]Tournament, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var tournament Tournament
+		var tournament types.Tournament
 		err := rows.Scan(
 			&tournament.AddedWhen,
 			&tournament.Name,

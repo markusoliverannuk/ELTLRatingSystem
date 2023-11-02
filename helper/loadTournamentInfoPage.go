@@ -3,11 +3,12 @@ package helper
 import (
 	"fmt"
 	"net/http"
+	types "ratingtable/1types"
 )
 
-func LoadTournamentAddPage(w http.ResponseWriter, r *http.Request, tournaments []Tournament) {
+func LoadTournamentAddPage(w http.ResponseWriter, r *http.Request, tournaments []types.Tournament) {
 	data := struct {
-		Tournaments []Tournament
+		Tournaments []types.Tournament
 	}{
 		Tournaments: tournaments,
 	}

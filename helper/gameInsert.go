@@ -57,6 +57,9 @@ func GameInsertExecution(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		UpdateRanking(WinnerPlayer, FinalPointChangeWinner)
 		UpdateRanking(LoserPlayer, FinalPointChangeLoser)
 
+
+		http.Redirect(w, r, "/addtournament", http.StatusSeeOther)
+
 		//Hommikul teha
 
 		// Otsi databaseist nii winner playerit kui ka loser playerit, vaata kas on olemas, kui ei ole

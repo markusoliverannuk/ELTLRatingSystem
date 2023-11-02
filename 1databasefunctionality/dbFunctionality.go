@@ -1,10 +1,11 @@
-package helper
+package dbfunc
 
 import (
 	"database/sql"
 	"encoding/xml"
 	"fmt"
 	"os"
+	types "ratingtable/1types"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -20,7 +21,7 @@ func DatabaseInitialization(path string) *sql.DB {
 	return db
 }
 
-func InsertPlayerToLeaderboard(db *sql.DB, person Person) error {
+func InsertPlayerToLeaderboard(db *sql.DB, person types.Person) error {
 
 	birthDate, err := time.Parse("2006-01-02", person.BirthDate)
 	if err != nil {
@@ -64,7 +65,7 @@ func ProcessXMLFile(filename string) error {
 		}
 		defer xmlFile.Close()
 
-		var persons Persons
+		var persons types.Persons
 		decoder := xml.NewDecoder(xmlFile)
 		if err := decoder.Decode(&persons); err != nil {
 			return err

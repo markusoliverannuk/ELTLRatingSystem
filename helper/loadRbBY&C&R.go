@@ -3,11 +3,13 @@ package helper
 import (
 	"fmt"
 	"log"
+	dbfunc "ratingtable/1databasefunctionality"
+	types "ratingtable/1types"
 	"strconv"
 )
 
-func RetrievePlayerDataFromDatabaseByBirthYearAndClubAndRange(birthyear string, clubname string, ratingrange string) ([]Person, error) {
-	var players []Person
+func RetrievePlayerDataFromDatabaseByBirthYearAndClubAndRange(birthyear string, clubname string, ratingrange string) ([]types.Person, error) {
+	var players []types.Person
 
 	ratingrangerune := []rune(ratingrange)
 
@@ -21,7 +23,7 @@ func RetrievePlayerDataFromDatabaseByBirthYearAndClubAndRange(birthyear string, 
 	if err != nil {
 
 	}
-	rows, err := Db.Query("SELECT * FROM leaderboard WHERE SA LIKE ? AND KLUBI LIKE ? AND NR >= ? AND NR <= ?", "%"+birthyear+"%", "%"+clubname+"%", lowerRangePoint, upperRangePoint)
+	rows, err := dbfunc.Db.Query("SELECT * FROM leaderboard WHERE SA LIKE ? AND KLUBI LIKE ? AND NR >= ? AND NR <= ?", "%"+birthyear+"%", "%"+clubname+"%", lowerRangePoint, upperRangePoint)
 	if err != nil {
 		log.Fatal(err)
 		return players, err
@@ -29,7 +31,7 @@ func RetrievePlayerDataFromDatabaseByBirthYearAndClubAndRange(birthyear string, 
 	defer rows.Close()
 
 	for rows.Next() {
-		var player Person
+		var player types.Person
 		err := rows.Scan(
 			&player.RateOrder,
 			&player.RatePlpnts,

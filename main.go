@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	dbfunc "ratingtable/1databasefunctionality"
 	"ratingtable/helper"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -14,13 +15,13 @@ var db *sql.DB
 
 func main() {
 
-	helper.Db = helper.DatabaseInitialization("leaderboard.db")
-	helper.CreateDbTablePlayers(helper.Db)
+	dbfunc.Db = dbfunc.DatabaseInitialization("dbstorage/leaderboard.db")
+	dbfunc.CreateDbTablePlayers(dbfunc.Db)
 
-	helper.CreateDbTableTournaments(helper.Db)
+	dbfunc.CreateDbTableTournaments(dbfunc.Db)
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	if err := helper.ProcessXMLFile("players.xml"); err != nil {
+	if err := dbfunc.ProcessXMLFile("players.xml"); err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
