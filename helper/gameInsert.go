@@ -48,7 +48,15 @@ func GameInsertExecution(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 		PointChangePreWeight := CalculateRPForPlayers(ratingPointsWinner, ratingPointsLoser, RPSubstraction)
 		fmt.Println("Point Change before weights applied", PointChangePreWeight)
-		AddWeightedMultiplier(PointChangePreWeight, weightPointsWinner)
+		FinalPointChangeWinner := AddWeightedMultiplier(PointChangePreWeight, weightPointsWinner)
+		FinalPointChangeLoser := AddWeightedMultiplier(PointChangePreWeight, weightPointsLoser)
+		FinalPointChangeLoser *= -1
+		fmt.Println("Final point change with weightalgorithm added for winner:", FinalPointChangeWinner)
+		fmt.Println("Final point change with weightalgorithm added for loser:", FinalPointChangeLoser)
+
+		UpdateRanking(WinnerPlayer, FinalPointChangeWinner)
+		UpdateRanking(LoserPlayer, FinalPointChangeLoser)
+
 		//Hommikul teha
 
 		// Otsi databaseist nii winner playerit kui ka loser playerit, vaata kas on olemas, kui ei ole
@@ -56,7 +64,3 @@ func GameInsertExecution(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		// olenevalt sellest mis on punktide vahe, ss kas liida v lahuta kindel arv reitingupunkte neilt.
 	}
 }
-
-
-
-

@@ -7,7 +7,6 @@ import (
 
 func CreateDbTablePlayers(db *sql.DB) {
 	_, err1 := db.Exec(`CREATE TABLE IF NOT EXISTS leaderboard (
-        NR INTEGER,
 		PP INTEGER,
         RP INTEGER,
         KL INTEGER,

@@ -1,21 +1,27 @@
 package helper
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 func RetrievePlayerDataFromDatabase() ([]Person, error) {
-	var players []Person
 
-	rows, err := Db.Query("SELECT * FROM leaderboard")
+	rows, err := Db.Query("SELECT * FROM leaderboard ORDER BY PP DESC")
 	if err != nil {
-		log.Fatal(err)
-		return players, err
+		// Handle the error
+		fmt.Println(err)
+		return nil, err
 	}
 	defer rows.Close()
 
+	var players []Person
+	rank := 1
 	for rows.Next() {
+
 		var player Person
+		player.RankingPos = rank
 		err := rows.Scan(
-			&player.RateOrder,
 			&player.RatePlpnts,
 			&player.RatePoints,
 			&player.RateWeight,
@@ -26,10 +32,13 @@ func RetrievePlayerDataFromDatabase() ([]Person, error) {
 			&player.ClbName,
 		)
 		if err != nil {
-			log.Fatal(err)
-			return players, err
+			// Handle the error
+			fmt.Println(err, "heyy")
+
 		}
+
 		players = append(players, player)
+		rank++
 	}
 
 	return players, nil

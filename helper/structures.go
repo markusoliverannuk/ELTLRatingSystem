@@ -3,6 +3,7 @@ package helper
 // Players in leaderboard ---------------------------
 
 type Person struct {
+	RankingPos int
 	PersonID   int    `xml:"personid"`
 	FamName    string `xml:"famname"`
 	FirstName  string `xml:"firstname"`

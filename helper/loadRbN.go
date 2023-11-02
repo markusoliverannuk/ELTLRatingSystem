@@ -15,7 +15,7 @@ func RetrievePlayerDataFromDatabaseByName(playername string) ([]Person, error) {
 	for rows.Next() {
 		var player Person
 		err := rows.Scan(
-			&player.RateOrder,
+			&player.RankingPos,
 			&player.RatePlpnts,
 			&player.RatePoints,
 			&player.RateWeight,

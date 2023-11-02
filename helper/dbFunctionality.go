@@ -29,14 +29,12 @@ func InsertPlayerToLeaderboard(db *sql.DB, person Person) error {
 
 	birthYear := birthDate.Year()
 	insertSQL := `
-		        INSERT INTO leaderboard (NR, PP, RP, KL, ID, EESNIMI, PERENIMI, SA, KLUBI)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+		        INSERT INTO leaderboard ( PP, RP, KL, ID, EESNIMI, PERENIMI, SA, KLUBI)
+				VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)
 		    `
 
 	_, err3 := db.Exec(
 		insertSQL,
-		person.RateOrder,
-		person.RatePlpnts,
 		person.RatePlpnts,
 		person.RatePoints,
 		person.RateWeight,

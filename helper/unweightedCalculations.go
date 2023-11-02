@@ -12,7 +12,7 @@ func CalculateRPForPlayers(ratingPointsWinner int, ratingPointsLoser int, RPSubs
 			PointChange = 0
 		}
 	} else if ratingPointsLoser > ratingPointsWinner {
-
+		PointChange = (RPSubstraction + 5) / 3
 	}
 
 	return PointChange
